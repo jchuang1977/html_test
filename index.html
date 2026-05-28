@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>暖掌寵物清潔照顧</title>
+  <meta name="description" content="暖掌提供寵物洗澡、美容、耳眼清潔、到府照顧與散步陪伴服務。">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #24302e;
+      --muted: #65706d;
+      --line: #dce5e1;
+      --paper: #fffdf8;
+      --soft: #f4f8f2;
+      --mint: #78b99b;
+      --deep: #1f6f66;
+      --coral: #ee8067;
+      --sky: #8ec6d8;
+      --lemon: #f5c95e;
+      --shadow: 0 20px 60px rgba(42, 66, 59, 0.16);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pet-art {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(36, 48, 46, 0.1);
+      background: rgba(255, 253, 248, 0.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--deep);
+      color: #fff;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: var(--soft);
+      color: var(--deep);
+      outline: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: var(--deep);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(31, 111, 102, 0.22);
+      outline: none;
+    }
+
+    .btn.secondary {
+      border-color: rgba(36, 48, 46, 0.16);
+      background: #fff;
+      color: var(--ink);
+      box-shadow: none;
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        radial-gradient(circle at 78% 30%, rgba(245, 201, 94, 0.72) 0 9%, transparent 10%),
+        radial-gradient(circle at 72% 62%, rgba(238, 128, 103, 0.62) 0 14%, transparent 15%),
+        radial-gradient(circle at 90% 76%, rgba(142, 198, 216, 0.72) 0 11%, transparent 12%),
+        linear-gradient(90deg, rgba(16, 31, 29, 0.86) 0%, rgba(31, 111, 102, 0.72) 46%, rgba(120, 185, 155, 0.35) 100%);
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 140px;
+      z-index: -1;
+      background: linear-gradient(0deg, var(--paper), rgba(255, 253, 248, 0));
+    }
+
+    .hero-content {
+      width: min(720px, 100%);
+      padding: 92px 0 126px;
+      color: #fff;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--lemon);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(17px, 2vw, 21px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .hero-actions .secondary {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .quick-bar {
+      position: relative;
+      z-index: 2;
+      margin-top: -58px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .quick-item {
+      padding: 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .quick-item:last-child {
+      border-right: 0;
+    }
+
+    .quick-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--deep);
+      font-size: 22px;
+    }
+
+    .quick-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    section {
+      padding: 96px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--coral);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 650px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 420px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .service-card,
+    .price-card,
+    .testimonial,
+    .form-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .service-card {
+      overflow: hidden;
+    }
+
+    .service-image {
+      height: 210px;
+      background: var(--soft);
+    }
+
+    .service-card .copy {
+      padding: 22px;
+    }
+
+    .service-card h3,
+    .price-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .service-card p,
+    .price-card p,
+    .testimonial p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .care {
+      background: #eef6f7;
+    }
+
+    .care-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: 46px;
+    }
+
+    .care-photo {
+      min-height: 560px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid rgba(31, 111, 102, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .step-number {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--sky);
+      color: #14383a;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin: 0 0 4px;
+      font-size: 19px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .prices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price-card {
+      padding: 26px;
+    }
+
+    .price-card.featured {
+      border-color: rgba(238, 128, 103, 0.6);
+      box-shadow: var(--shadow);
+    }
+
+    .price {
+      margin: 18px 0;
+      color: var(--deep);
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .price small {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .features {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+    }
+
+    .features li {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: var(--coral);
+      font-weight: 900;
+    }
+
+    .reviews {
+      background: var(--soft);
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .review-photo {
+      min-height: 420px;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+
+    .review-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .testimonial {
+      padding: 22px;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 16px;
+      color: var(--deep);
+    }
+
+    .booking {
+      padding-bottom: 112px;
+    }
+
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .booking-copy {
+      position: sticky;
+      top: 104px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+      color: var(--muted);
+    }
+
+    .contact-list div {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .form-panel {
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      min-height: 46px;
+      padding: 10px 12px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--deep);
+      box-shadow: 0 0 0 4px rgba(120, 185, 155, 0.18);
+      outline: none;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .form-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: inline-flex;
+      }
+
+      .quick-grid,
+      .services-grid,
+      .prices-grid,
+      .care-layout,
+      .review-grid,
+      .booking-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .quick-item:last-child {
+        border-bottom: 0;
+      }
+
+      .care-photo,
+      .review-photo {
+        min-height: 360px;
+      }
+
+      .booking-copy {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .nav {
+        min-height: 64px;
+      }
+
+      .brand span:last-child {
+        font-size: 15px;
+      }
+
+      .hero {
+        min-height: 720px;
+      }
+
+      .hero-content {
+        padding: 78px 0 118px;
+      }
+
+      .hero-actions,
+      .section-head,
+      .footer-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-panel {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav" aria-label="主要導覽">
+      <a class="brand" href="#top" aria-label="回到暖掌首頁">
+        <span class="brand-mark" aria-hidden="true">♡</span>
+        <span>暖掌 Pet Care</span>
+      </a>
+      <nav class="nav-links" aria-label="網站區塊">
+        <a href="#services">服務</a>
+        <a href="#care">流程</a>
+        <a href="#prices">方案</a>
+        <a href="#reviews">評價</a>
+        <a href="#booking">預約</a>
+      </nav>
+      <a class="btn mobile-menu" href="#booking">預約</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="寵物清潔照顧首頁">
+      <div class="shell hero-content">
+        <p class="eyebrow">Clean care for furry family</p>
+        <h1>把洗澡、清潔與陪伴，做得像回家一樣安心。</h1>
+        <p>暖掌提供貓狗洗澡美容、耳眼牙清潔、指甲修剪、到府照顧與散步服務。每一次照護都先了解個性，再用溫柔節奏完成。</p>
+        <div class="hero-actions">
+          <a class="btn" href="#booking">立即預約</a>
+          <a class="btn secondary" href="#services">查看服務</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="quick-bar">
+      <div class="shell quick-grid" aria-label="服務特色">
+        <div class="quick-item">
+          <strong>1 對 1</strong>
+          <span>低壓清潔空間，不混籠等待</span>
+        </div>
+        <div class="quick-item">
+          <strong>30 分鐘</strong>
+          <span>服務前健康與皮膚狀態檢查</span>
+        </div>
+        <div class="quick-item">
+          <strong>透明報告</strong>
+          <span>完成後提供照片與照護紀錄</span>
+        </div>
+        <div class="quick-item">
+          <strong>到府可約</strong>
+          <span>雙北部分區域支援居家照顧</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="services">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">SERVICES</p>
+            <h2>從日常清潔到短期照顧，都用同一套細心標準。</h2>
+          </div>
+          <p>適合需要固定整理、容易緊張、術後恢復期或主人出差時的毛孩。可依年齡、毛量、皮膚狀態調整洗劑與時間。</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-image">
+              <svg class="pet-art" viewBox="0 0 640 360" role="img" aria-label="小狗接受清潔照顧">
+                <rect width="640" height="360" fill="#eaf7f1"/>
+                <circle cx="512" cy="64" r="88" fill="#f5c95e"/>
+                <rect x="58" y="236" width="524" height="74" rx="22" fill="#78b99b"/>
+                <ellipse cx="298" cy="200" rx="142" ry="86" fill="#fff7ec"/>
+                <circle cx="202" cy="153" r="72" fill="#fff7ec"/>
+                <path d="M154 118c-42 4-63 37-55 82 37 0 70-26 79-64z" fill="#d78f68"/>
+                <path d="M250 108c41 8 59 43 47 86-36-3-66-32-72-70z" fill="#d78f68"/>
+                <circle cx="180" cy="160" r="8" fill="#24302e"/>
+                <circle cx="225" cy="160" r="8" fill="#24302e"/>
+                <path d="M196 182c10 12 24 12 34 0" fill="none" stroke="#24302e" stroke-width="8" stroke-linecap="round"/>
+                <circle cx="214" cy="174" r="8" fill="#24302e"/>
+                <circle cx="382" cy="151" r="34" fill="#ffffff" opacity=".9"/>
+                <circle cx="422" cy="122" r="22" fill="#ffffff" opacity=".9"/>
+                <circle cx="452" cy="156" r="28" fill="#ffffff" opacity=".9"/>
+                <path d="M395 210c52 6 96-20 116-58" fill="none" stroke="#1f6f66" stroke-width="16" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="copy">
+              <h3>溫和洗澡美容</h3>
+              <p>基礎洗澡、吹整、梳廢毛、局部修剪，適合固定維持毛髮蓬鬆與皮膚清爽。</p>
+              <div class="chips">
+                <span class="chip">低敏洗劑</span>
+                <span class="chip">廢毛整理</span>
+                <span class="chip">造型修剪</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-image">
+              <svg class="pet-art" viewBox="0 0 640 360" role="img" aria-label="兩隻狗在戶外散步">
+                <rect width="640" height="360" fill="#eaf6f7"/>
+                <path d="M0 260c98-38 179-42 275-13 95 30 213 25 365-42v155H0z" fill="#78b99b"/>
+                <circle cx="512" cy="74" r="48" fill="#f5c95e"/>
+                <path d="M137 208h142l20 52h-38l-13-27h-82l-13 27h-38z" fill="#fff8ed"/>
+                <circle cx="137" cy="187" r="42" fill="#fff8ed"/>
+                <path d="M106 159l-38 28 48 18z" fill="#ee8067"/>
+                <circle cx="127" cy="187" r="6" fill="#24302e"/>
+                <path d="M308 204h118l17 48h-34l-9-24h-70l-11 24h-32z" fill="#304b47"/>
+                <circle cx="423" cy="184" r="36" fill="#304b47"/>
+                <path d="M444 157l39 24-43 18z" fill="#1f6f66"/>
+                <circle cx="433" cy="184" r="5" fill="#fff"/>
+                <path d="M465 203c36 4 64-10 86-39" fill="none" stroke="#1f6f66" stroke-width="9" stroke-linecap="round"/>
+                <path d="M85 270c112 22 238 23 382 0" fill="none" stroke="#fffdf8" stroke-width="10" opacity=".8"/>
+              </svg>
+            </div>
+            <div class="copy">
+              <h3>到府照顧散步</h3>
+              <p>餵食、換水、清貓砂、散步陪伴、簡易環境整理，出差或臨時加班也放心。</p>
+              <div class="chips">
+                <span class="chip">照片回報</span>
+                <span class="chip">餵藥協助</span>
+                <span class="chip">散步陪伴</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-image">
+              <svg class="pet-art" viewBox="0 0 640 360" role="img" aria-label="貓咪躺著休息">
+                <rect width="640" height="360" fill="#fff7ec"/>
+                <rect x="70" y="234" width="500" height="70" rx="26" fill="#8ec6d8"/>
+                <ellipse cx="320" cy="209" rx="142" ry="70" fill="#e8b884"/>
+                <circle cx="229" cy="168" r="62" fill="#e8b884"/>
+                <path d="M180 127l-21-55 58 26z" fill="#d58c62"/>
+                <path d="M264 126l31-51 21 61z" fill="#d58c62"/>
+                <circle cx="209" cy="164" r="7" fill="#24302e"/>
+                <circle cx="250" cy="164" r="7" fill="#24302e"/>
+                <path d="M224 184c11 10 25 10 36 0" fill="none" stroke="#24302e" stroke-width="7" stroke-linecap="round"/>
+                <path d="M449 208c66 4 86-54 37-81" fill="none" stroke="#e8b884" stroke-width="28" stroke-linecap="round"/>
+                <path d="M135 176h-76M138 196H62M300 176h72M297 196h70" stroke="#24302e" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+                <circle cx="470" cy="89" r="34" fill="#78b99b" opacity=".7"/>
+                <circle cx="516" cy="128" r="22" fill="#f5c95e" opacity=".8"/>
+              </svg>
+            </div>
+            <div class="copy">
+              <h3>精緻局部護理</h3>
+              <p>耳朵、眼周、牙齒、腳底毛與指甲處理，針對最容易忽略的小細節加強照護。</p>
+              <div class="chips">
+                <span class="chip">耳眼清潔</span>
+                <span class="chip">剪指甲</span>
+                <span class="chip">牙齒保健</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="care" id="care">
+      <div class="shell care-layout">
+        <div class="care-photo">
+          <svg class="pet-art" viewBox="0 0 720 760" role="img" aria-label="寵物美容師溫柔抱著狗">
+            <defs>
+              <linearGradient id="care-bg" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#eff8f7"/>
+                <stop offset="1" stop-color="#b8dfd0"/>
+              </linearGradient>
+            </defs>
+            <rect width="720" height="760" fill="url(#care-bg)"/>
+            <circle cx="568" cy="120" r="72" fill="#f5c95e" opacity=".9"/>
+            <path d="M80 610c103-85 220-99 351-43 93 40 160 37 249-15v208H80z" fill="#78b99b"/>
+            <rect x="206" y="210" width="308" height="398" rx="92" fill="#ee8067"/>
+            <circle cx="360" cy="168" r="86" fill="#f2c4a5"/>
+            <path d="M272 154c17-84 97-126 177-75 46 30 60 75 54 125-71 7-131-20-178-78-11 33-30 53-53 28z" fill="#24302e"/>
+            <path d="M250 359c-62 49-91 95-90 143" fill="none" stroke="#f2c4a5" stroke-width="42" stroke-linecap="round"/>
+            <path d="M470 363c63 52 91 98 89 147" fill="none" stroke="#f2c4a5" stroke-width="42" stroke-linecap="round"/>
+            <ellipse cx="360" cy="484" rx="154" ry="118" fill="#fff7ec"/>
+            <circle cx="281" cy="405" r="70" fill="#fff7ec"/>
+            <path d="M234 356l-44 38 59 14z" fill="#d78f68"/>
+            <path d="M329 353l42 41-60 14z" fill="#d78f68"/>
+            <circle cx="263" cy="405" r="8" fill="#24302e"/>
+            <circle cx="309" cy="405" r="8" fill="#24302e"/>
+            <circle cx="291" cy="424" r="9" fill="#24302e"/>
+            <path d="M267 442c15 16 35 16 49 0" fill="none" stroke="#24302e" stroke-width="8" stroke-linecap="round"/>
+            <path d="M452 453c58 7 101-17 126-64" fill="none" stroke="#fff7ec" stroke-width="30" stroke-linecap="round"/>
+            <circle cx="526" cy="248" r="32" fill="#fff" opacity=".85"/>
+            <circle cx="573" cy="292" r="24" fill="#fff" opacity=".78"/>
+            <circle cx="501" cy="303" r="18" fill="#fff" opacity=".8"/>
+          </svg>
+        </div>
+        <div>
+          <p class="section-kicker">HOW WE CARE</p>
+          <h2>不趕時間，先讓毛孩熟悉人、聲音與空間。</h2>
+          <div class="steps">
+            <article class="step">
+              <span class="step-number">01</span>
+              <div>
+                <h3>了解習慣</h3>
+                <p>確認品種、年齡、敏感部位、過往洗澡經驗與醫療注意事項。</p>
+              </div>
+            </article>
+            <article class="step">
+              <span class="step-number">02</span>
+              <div>
+                <h3>溫柔清潔</h3>
+                <p>依皮膚與毛量選擇清潔方式，吹整時分段休息，降低緊張感。</p>
+              </div>
+            </article>
+            <article class="step">
+              <span class="step-number">03</span>
+              <div>
+                <h3>紀錄回報</h3>
+                <p>提供完成照、皮膚與耳眼狀況提醒，方便主人追蹤日常變化。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prices">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">PRICING</p>
+            <h2>清楚方案，依毛孩大小與需求微調。</h2>
+          </div>
+          <p>以下為基本參考價，實際費用會依毛量、打結狀況、服務距離與特殊照護需求調整。</p>
+        </div>
+
+        <div class="prices-grid">
+          <article class="price-card">
+            <h3>基礎清爽</h3>
+            <p>適合短毛犬貓或固定保養。</p>
+            <div class="price">$900 <small>起</small></div>
+            <ul class="features">
+              <li>洗澡與吹整</li>
+              <li>基礎梳毛</li>
+              <li>耳眼清潔</li>
+              <li>指甲修剪</li>
+            </ul>
+          </article>
+
+          <article class="price-card featured">
+            <h3>全套柔亮</h3>
+            <p>完整清潔與毛髮整理，最受歡迎。</p>
+            <div class="price">$1,500 <small>起</small></div>
+            <ul class="features">
+              <li>基礎清爽全部內容</li>
+              <li>局部修剪與腳底毛</li>
+              <li>廢毛深層整理</li>
+              <li>保濕護毛</li>
+            </ul>
+          </article>
+
+          <article class="price-card">
+            <h3>到府陪伴</h3>
+            <p>短期外出、加班或旅行照顧。</p>
+            <div class="price">$700 <small>/ 次起</small></div>
+            <ul class="features">
+              <li>餵食換水</li>
+              <li>貓砂與簡易清潔</li>
+              <li>散步或陪玩</li>
+              <li>照片與文字回報</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews" id="reviews">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">REVIEWS</p>
+            <h2>主人最常說：看得出來毛孩真的被好好對待。</h2>
+          </div>
+        </div>
+        <div class="review-grid">
+          <div class="review-photo">
+            <svg class="pet-art" viewBox="0 0 720 520" role="img" aria-label="洗完澡的狗坐在室內">
+              <rect width="720" height="520" fill="#fffdf8"/>
+              <rect y="348" width="720" height="172" fill="#eaf7f1"/>
+              <circle cx="574" cy="108" r="60" fill="#f5c95e"/>
+              <ellipse cx="358" cy="333" rx="158" ry="118" fill="#fff7ec"/>
+              <circle cx="282" cy="231" r="92" fill="#fff7ec"/>
+              <path d="M218 169c-55 6-88 48-84 111 54-3 96-37 112-91z" fill="#d78f68"/>
+              <path d="M341 165c54 7 82 53 74 114-53-5-93-42-105-97z" fill="#d78f68"/>
+              <circle cx="252" cy="233" r="10" fill="#24302e"/>
+              <circle cx="314" cy="233" r="10" fill="#24302e"/>
+              <circle cx="286" cy="257" r="12" fill="#24302e"/>
+              <path d="M257 283c21 20 48 20 69 0" fill="none" stroke="#24302e" stroke-width="10" stroke-linecap="round"/>
+              <path d="M470 318c68 4 106-27 117-86" fill="none" stroke="#fff7ec" stroke-width="34" stroke-linecap="round"/>
+              <path d="M164 388h390" stroke="#78b99b" stroke-width="16" stroke-linecap="round"/>
+              <circle cx="490" cy="173" r="28" fill="#8ec6d8" opacity=".75"/>
+              <circle cx="530" cy="215" r="18" fill="#8ec6d8" opacity=".75"/>
+              <circle cx="455" cy="218" r="22" fill="#8ec6d8" opacity=".75"/>
+            </svg>
+          </div>
+          <div class="review-list">
+            <article class="testimonial">
+              <p>我家狗很怕吹風機，以前洗澡都發抖。暖掌會分段休息，回家後沒有躲起來，毛也超蓬鬆。</p>
+              <strong>柴犬 Kuri 的主人</strong>
+            </article>
+            <article class="testimonial">
+              <p>出差三天請到府照顧，每次都有照片和貓砂狀況。回家時貓咪很穩定，真的安心很多。</p>
+              <strong>米克斯 Momo 的主人</strong>
+            </article>
+            <article class="testimonial">
+              <p>耳朵清潔很細，也提醒我皮膚有一小塊泛紅。不是只把寵物洗乾淨，而是真的有觀察。</p>
+              <strong>貴賓 Nana 的主人</strong>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="booking">
+      <div class="shell booking-layout">
+        <div class="booking-copy">
+          <p class="section-kicker">BOOKING</p>
+          <h2>先聊聊毛孩的狀況，再安排最舒服的照護方式。</h2>
+          <p>填寫預約需求後，我們會在營業時間內聯繫確認日期、服務內容與注意事項。</p>
+          <div class="contact-list">
+            <div><strong>營業時間</strong><br>週二至週日 10:00 - 19:00</div>
+            <div><strong>服務區域</strong><br>台北市、新北市部分區域可到府</div>
+            <div><strong>聯絡方式</strong><br>hello@warmpaw.example ｜ 02-2345-6789</div>
+          </div>
+        </div>
+
+        <form class="form-panel" onsubmit="event.preventDefault(); this.querySelector('.form-note').textContent='已收到預約需求，我們會盡快與你確認時段。';">
+          <div class="form-grid">
+            <label>
+              主人姓名
+              <input type="text" name="name" autocomplete="name" placeholder="王小暖" required>
+            </label>
+            <label>
+              聯絡電話
+              <input type="tel" name="phone" autocomplete="tel" placeholder="0912-345-678" required>
+            </label>
+            <label>
+              毛孩類型
+              <select name="pet" required>
+                <option value="">請選擇</option>
+                <option>狗狗</option>
+                <option>貓咪</option>
+                <option>其他小型寵物</option>
+              </select>
+            </label>
+            <label>
+              需要服務
+              <select name="service" required>
+                <option value="">請選擇</option>
+                <option>洗澡美容</option>
+                <option>局部護理</option>
+                <option>到府照顧</option>
+                <option>散步陪伴</option>
+              </select>
+            </label>
+            <label class="full">
+              希望日期
+              <input type="date" name="date" required>
+            </label>
+            <label class="full">
+              毛孩狀況與備註
+              <textarea name="message" placeholder="例如：8 歲柴犬、怕吹風、耳朵容易敏感、希望下午時段。"></textarea>
+            </label>
+          </div>
+          <button class="btn" type="submit">送出預約需求</button>
+          <p class="form-note" aria-live="polite">送出後不會真的寄出資料，這是單頁網站的示範表單。</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span>© 2026 暖掌寵物清潔照顧</span>
+      <span>溫柔清潔，細心陪伴，透明回報。</span>
+    </div>
+  </footer>
+</body>
+</html>
