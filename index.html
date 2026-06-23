@@ -1007,7 +1007,7 @@
           </div>
         </div>
 
-        <form class="form-panel" onsubmit="event.preventDefault(); this.querySelector('.form-note').textContent='已收到預約需求，我們會盡快與你確認時段。';">
+        <form class="form-panel">
           <div class="form-grid">
             <label>
               主人姓名
@@ -1058,5 +1058,177 @@
       <span>溫柔清潔，細心陪伴，透明回報。</span>
     </div>
   </footer>
+  <script type="module">
+    import { animate, createTimeline, stagger } from "./vendor/anime.esm.min.js";
+
+    (() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.dataset.motion = reduceMotion ? "reduced" : "anime";
+
+      const ease = "outCubic";
+
+      const toArray = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+      const prepare = (elements, y = 20) => {
+        elements.forEach((element) => {
+          element.style.opacity = "0";
+          element.style.transform = `translateY(${y}px)`;
+          element.style.willChange = "opacity, transform";
+        });
+      };
+
+      const reveal = (elements, options = {}) => {
+        const items = Array.isArray(elements) ? elements : toArray(elements);
+        if (!items.length) return;
+
+        animate(items, {
+          opacity: [0, 1],
+          translateY: [options.y ?? 20, 0],
+          duration: options.duration ?? 720,
+          delay: options.delay ?? stagger(90),
+          ease: options.ease ?? ease,
+          onComplete: () => {
+            items.forEach((item) => {
+              item.style.willChange = "";
+            });
+          },
+        });
+      };
+
+      const observeReveal = (containerSelector, itemSelector, options = {}) => {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+
+        const items = toArray(itemSelector, container);
+        prepare(items, options.y ?? 22);
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            reveal(items, options);
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: options.threshold ?? 0.22 });
+
+        observer.observe(container);
+      };
+
+      const runHeroTimeline = () => {
+        const heroItems = toArray(".hero .eyebrow, .hero h1, .hero p, .hero-actions .btn");
+        const quickItems = toArray(".quick-item");
+        prepare(heroItems, 24);
+        prepare(quickItems, 18);
+
+        if (typeof createTimeline === "function") {
+          createTimeline({ defaults: { duration: 720, ease } })
+            .add(".hero .eyebrow", { opacity: [0, 1], translateY: [18, 0] })
+            .add(".hero h1", { opacity: [0, 1], translateY: [26, 0] }, "-=420")
+            .add(".hero p", { opacity: [0, 1], translateY: [22, 0] }, "-=420")
+            .add(".hero-actions .btn", {
+              opacity: [0, 1],
+              translateY: [16, 0],
+              delay: stagger(90),
+            }, "-=360")
+            .add(".quick-item", {
+              opacity: [0, 1],
+              translateY: [18, 0],
+              delay: stagger(80),
+            }, "-=220");
+          return;
+        }
+
+        reveal(heroItems, { delay: stagger(100), y: 24 });
+        setTimeout(() => reveal(quickItems, { delay: stagger(80), y: 18 }), 420);
+      };
+
+      const animatePetArt = () => {
+        toArray(".pet-art").forEach((svg, index) => {
+          const bubbles = toArray("circle", svg).slice(-3);
+          if (bubbles.length) {
+            animate(bubbles, {
+              translateY: [0, -8, 0],
+              scale: [1, 1.06, 1],
+              duration: 2600 + index * 180,
+              delay: stagger(140),
+              loop: true,
+              ease: "inOutSine",
+            });
+          }
+
+          const softShapes = toArray("ellipse", svg);
+          if (softShapes.length) {
+            animate(softShapes, {
+              scale: [1, 1.025, 1],
+              duration: 3600,
+              delay: index * 160,
+              loop: true,
+              ease: "inOutSine",
+            });
+          }
+        });
+      };
+
+      const enhanceHover = () => {
+        toArray(".btn").forEach((button) => {
+          button.addEventListener("mouseenter", () => {
+            animate(button, { scale: 1.035, duration: 180, ease: "outQuad" });
+          });
+          button.addEventListener("mouseleave", () => {
+            animate(button, { scale: 1, duration: 220, ease });
+          });
+        });
+
+        toArray(".service-card, .price-card, .testimonial").forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            animate(card, { translateY: -6, duration: 220, ease: "outQuad" });
+          });
+          card.addEventListener("mouseleave", () => {
+            animate(card, { translateY: 0, duration: 260, ease });
+          });
+        });
+      };
+
+      const enhanceForm = (shouldAnimate = true) => {
+        const form = document.querySelector(".form-panel");
+        if (!form) return;
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const note = form.querySelector(".form-note");
+          const button = form.querySelector("button");
+
+          note.textContent = "已收到預約需求，我們會盡快與你確認時段。";
+          if (!shouldAnimate) return;
+
+          animate(button, {
+            scale: [1, 0.96, 1],
+            backgroundColor: ["#1f6f66", "#78b99b", "#1f6f66"],
+            duration: 520,
+            ease: "outQuad",
+          });
+          animate(note, {
+            opacity: [0, 1],
+            translateY: [8, 0],
+            duration: 420,
+            ease,
+          });
+        });
+      };
+
+      enhanceForm(!reduceMotion);
+      if (reduceMotion) {
+        return;
+      }
+
+      runHeroTimeline();
+      observeReveal("#services", ".service-card", { y: 24, duration: 760 });
+      observeReveal("#care", ".step", { y: 18, duration: 620, threshold: 0.28 });
+      observeReveal("#prices", ".price-card", { y: 24, duration: 760 });
+      observeReveal("#reviews", ".review-photo, .testimonial", { y: 22, duration: 720 });
+      observeReveal("#booking", ".booking-copy, .form-panel", { y: 22, duration: 720 });
+      animatePetArt();
+      enhanceHover();
+    })();
+  </script>
 </body>
 </html>
