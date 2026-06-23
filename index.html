@@ -1062,10 +1062,11 @@
     import { animate, createTimeline, stagger } from "./vendor/anime.esm.min.js";
 
     (() => {
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      document.documentElement.dataset.motion = reduceMotion ? "reduced" : "anime";
+      const motionMode = new URLSearchParams(window.location.search).get("motion");
+      const reduceMotion = motionMode === "off";
+      document.documentElement.dataset.motion = reduceMotion ? "off" : "anime";
 
-      const ease = "outCubic";
+      const ease = "out(3)";
 
       const toArray = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1121,19 +1122,21 @@
 
         if (typeof createTimeline === "function") {
           createTimeline({ defaults: { duration: 720, ease } })
-            .add(".hero .eyebrow", { opacity: [0, 1], translateY: [18, 0] })
-            .add(".hero h1", { opacity: [0, 1], translateY: [26, 0] }, "-=420")
-            .add(".hero p", { opacity: [0, 1], translateY: [22, 0] }, "-=420")
+            .add(".hero .eyebrow", { opacity: [0, 1], translateY: [28, 0] })
+            .add(".hero h1", { opacity: [0, 1], translateY: [42, 0] }, "-=360")
+            .add(".hero p", { opacity: [0, 1], translateY: [30, 0] }, "-=360")
             .add(".hero-actions .btn", {
               opacity: [0, 1],
-              translateY: [16, 0],
+              translateY: [24, 0],
+              scale: [0.96, 1],
               delay: stagger(90),
-            }, "-=360")
+            }, "-=300")
             .add(".quick-item", {
               opacity: [0, 1],
-              translateY: [18, 0],
+              translateY: [32, 0],
+              scale: [0.97, 1],
               delay: stagger(80),
-            }, "-=220");
+            }, "-=160");
           return;
         }
 
@@ -1143,26 +1146,38 @@
 
       const animatePetArt = () => {
         toArray(".pet-art").forEach((svg, index) => {
-          const bubbles = toArray("circle", svg).slice(-3);
+          const bubbles = toArray("circle[opacity]", svg);
           if (bubbles.length) {
             animate(bubbles, {
-              translateY: [0, -8, 0],
-              scale: [1, 1.06, 1],
-              duration: 2600 + index * 180,
+              translateY: [0, -18, 0],
+              translateX: [0, 5, 0],
+              scale: [1, 1.16, 1],
+              duration: 2200 + index * 180,
               delay: stagger(140),
               loop: true,
-              ease: "inOutSine",
+              ease: "inOut(2)",
             });
           }
 
           const softShapes = toArray("ellipse", svg);
           if (softShapes.length) {
             animate(softShapes, {
-              scale: [1, 1.025, 1],
-              duration: 3600,
+              scale: [1, 1.045, 1],
+              duration: 2800,
               delay: index * 160,
               loop: true,
-              ease: "inOutSine",
+              ease: "inOut(2)",
+            });
+          }
+
+          const tails = toArray("path[stroke-linecap='round']", svg).slice(-2);
+          if (tails.length) {
+            animate(tails, {
+              rotate: [-1.5, 1.5, -1.5],
+              transformOrigin: "50% 50%",
+              duration: 2600 + index * 120,
+              loop: true,
+              ease: "inOut(2)",
             });
           }
         });
@@ -1171,7 +1186,7 @@
       const enhanceHover = () => {
         toArray(".btn").forEach((button) => {
           button.addEventListener("mouseenter", () => {
-            animate(button, { scale: 1.035, duration: 180, ease: "outQuad" });
+            animate(button, { scale: 1.045, duration: 180, ease: "out(2)" });
           });
           button.addEventListener("mouseleave", () => {
             animate(button, { scale: 1, duration: 220, ease });
@@ -1180,10 +1195,10 @@
 
         toArray(".service-card, .price-card, .testimonial").forEach((card) => {
           card.addEventListener("mouseenter", () => {
-            animate(card, { translateY: -6, duration: 220, ease: "outQuad" });
+            animate(card, { translateY: -8, scale: 1.01, duration: 220, ease: "out(2)" });
           });
           card.addEventListener("mouseleave", () => {
-            animate(card, { translateY: 0, duration: 260, ease });
+            animate(card, { translateY: 0, scale: 1, duration: 260, ease });
           });
         });
       };
@@ -1204,7 +1219,7 @@
             scale: [1, 0.96, 1],
             backgroundColor: ["#1f6f66", "#78b99b", "#1f6f66"],
             duration: 520,
-            ease: "outQuad",
+            ease: "out(2)",
           });
           animate(note, {
             opacity: [0, 1],
