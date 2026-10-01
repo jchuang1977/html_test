@@ -1,0 +1,17 @@
+{
+  "name": "draw-guess",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "0.99.2",
+    "opencc-js": "1.4.2"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
+  }
+}
